@@ -25,7 +25,7 @@ function ParseLoc(micPos)
 	end
 
 	#to 75% quantile
-	idx = find(allMinf.<quantile(allMinf, .50));
+	idx = find(allMinf.<=quantile(allMinf, .50));
 	#allPositions = allPositions[:,:,idx];
 
 	avgPos = Array(Float64, ns, 2);
@@ -46,7 +46,7 @@ function ParseLoc(micPos)
 
 
 	#id = find(quantile(AllPol[1,1,:][:], .25) .< AllPol[1,1,:].<quantile(AllPol[1,1,:][:], .75));
-	id = find(AllPol[1,1,:].<quantile(AllPol[1,1,:][:], .50));
+	id = find(AllPol[1,1,:].<=quantile(AllPol[1,1,:][:], .50));
 	idx = idx[id];
 
 
