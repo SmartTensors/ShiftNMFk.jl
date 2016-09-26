@@ -186,7 +186,8 @@ function ShiftNMF(X, noc, opts, varargin...)
   #opts = Dict();                        #opts is a dictionary in julia instead of a struct in MATLAB
   if length(varargin)>0
     for  i = 1:2:length(varargin)-1
-      d1 = [varargin[i] => varargin[i+1]];
+      #d1 = [varargin[i] => varargin[i+1]]; depricatd syntax
+      d1 = Dict(varargin[i] => varargin[i+1]);
       opts = merge(opts, d1);
     end
   end
@@ -208,9 +209,12 @@ function ShiftNMF(X, noc, opts, varargin...)
       end
 
       optsn = opts;
-      optsn = merge(optsn,["dispiter"=>0]);
-      optsn = merge(optsn, ["runit"=>1]);
-      optsn = merge(optsn, ["maxiter"=>25]);
+      #optsn = merge(optsn,["dispiter"=>0]);
+      #optsn = merge(optsn, ["runit"=>1]);
+      #optsn = merge(optsn, ["maxiter"=>25]);
+      optsn = merge(optsn,Dict("dispiter"=>0));
+      optsn = merge(optsn, Dict("runit"=>1));
+      optsn = merge(optsn, Dict("maxiter"=>25));
 
      Wq, Hq, Tq, varexpl, cost= ShiftNMF(X,noc,optsn);
       #cost=Int64;
@@ -287,11 +291,14 @@ function ShiftNMF(X, noc, opts, varargin...)
     L=sparse(L);                  #Done to save memory, may not be needed in julia
   end
   N=size(X,2);
-  f=im*2*pi*[0:N-1]'/N;
+  #f=im*2*pi*[0:N-1]'/N;
+  f=im*2*pi*collect(0:N-1)'/N;
   Xf=fft(X,2);                         # Applies fft across 2nd dimension (columns)
-  Xf=Xf[:,1:floor(size(Xf,2)/2)+1];       #Setting Xf and Hf to half of the fft() (columns) because fft repeats (symetric)
+  #Xf=Xf[:,1:floor(size(Xf,2)/2)+1];    # depricated syntax
+  Xf=Xf[:,1:Int(floor(size(Xf,2)/2))+1];       #Setting Xf and Hf to half of the fft() (columns) because fft repeats (symetric)
   Hf=fft(H,2);
-  Hf=Hf[:,1:floor(size(Hf,2)/2)+1];
+  #Hf=Hf[:,1:floor(size(Hf,2)/2)+1];    # depricated syntax
+  Hf=Hf[:,1:Int(floor(size(Hf,2)/2))+1];
   f=f[1:size(Xf,2)]'*(-1);
 
 
@@ -322,7 +329,7 @@ function ShiftNMF(X, noc, opts, varargin...)
 
   cost_oldt=cost+smoothcost;
   dcost=Inf16;
-  told=int(time_ns())/1e9;
+  told=Int(time_ns())/1e9;
   iter=0;
 
   #Display Algorithm
@@ -366,8 +373,8 @@ function ShiftNMF(X, noc, opts, varargin...)
     small_w[2:end]=2;
   end    
 
-  P={"Xf"=>Xf, "sizeX2"=>size(X,2), "w"=>small_w, "f"=>f};
-
+  #P={"Xf"=>Xf, "sizeX2"=>size(X,2), "w"=>small_w, "f"=>f};  depricated syntax
+  P=Dict("Xf"=>Xf, "sizeX2"=>size(X,2), "w"=>small_w, "f"=>f);
   
   Recfd=Array(Complex{Float64},size(W,1),size(Hf,2),size(W,2));
   

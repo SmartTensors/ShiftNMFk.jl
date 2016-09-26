@@ -4,7 +4,6 @@ function PShiftNMF(p, numiter, Obs ,noc, opts)
  X=Obs;
  noc=noc;
  opts=opts;
- println("HERE2")
 
      W ,H, T, varexpl, cost = ShiftNMF(X, noc, opts);
     
@@ -30,10 +29,8 @@ function Parallel_ShiftNMF2(pnum, iter, Obs ,num_sources, opts)
 	sendto(1:cores,Obs=Obs);
 	sendto(1:cores,noc=num_sources);
 	sendto(1:cores,opts=opts);
-	println("HERE1")
-	
+
 	Try = pmap(a->PShiftNMF(a, iter, Obs, num_sources, opts), 1:pnum );
-	#Try = ShiftNMF( Obs, num_sources, opts);
 
 	return Try
 end

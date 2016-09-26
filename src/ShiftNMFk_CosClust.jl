@@ -166,7 +166,7 @@ function ShiftNMFk_CosCluster(X, maxSource)
 								StdTrue = std(Tpos);
 
 							if StdTrue./Tmean >= maxSpM
-								idx[f] = [idx[f][1:kg-1], idx[f][kg+1:end]];
+								idx[f] = [idx[f][1:kg-1]; idx[f][kg+1:end]];
 								kg = kg-1;
 							end
 							kg = kg+1;
@@ -199,7 +199,7 @@ function ShiftNMFk_CosCluster(X, maxSource)
 
 			BIGidx = [];
 			for i = 1:length(idx)
-				BIGidx = [BIGidx, idx[i]];
+				BIGidx = [BIGidx; idx[i]];
 			end
 			sort!(BIGidx);
 
@@ -252,7 +252,8 @@ function ShiftNMFk_CosCluster(X, maxSource)
 						Hf=fft(H,2);                         
 						Hf=Hf[:,1:floor(size(Hf,2)/2)+1];      
 						N=size(H,2);                            
-						f=im*2*pi*[0:N-1]'/N;                     
+						#f=im*2*pi*[0:N-1]'/N;  		# depricated syntax 
+						f=im*2*pi*collect(0:N-1)'/N;                  
 						f=f[1:size(Hf,2)]'*(-1);                      
 						for i=1:size(W,1)                       
 						   Hft=Hf[usecomp,:].*exp(T[i,usecomp]'*f); 

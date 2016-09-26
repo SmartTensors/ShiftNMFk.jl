@@ -40,7 +40,7 @@ function shiftNMFk(X, maxSource, globalIter, nmfIter)
 
 			
 				opts=Dict();
-				opts = {"runit"=>0, "convcrit"=>1e-8, "auto_corr"=>1, "maxiter"=>nmfIter, "dispiter"=>0};
+				opts = Dict("runit"=>0, "convcrit"=>1e-8, "auto_corr"=>1, "maxiter"=>nmfIter, "dispiter"=>0);
 
 				# DON'T FORGET the input matrix needs to be transposed as well as the output W and H matricies 
 				All_NMFanswers = Parallel_ShiftNMF2(globalIter, nmfIter, inputMatrix' ,numberOfProcesses, opts);
