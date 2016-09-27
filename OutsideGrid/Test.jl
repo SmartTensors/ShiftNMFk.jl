@@ -1,3 +1,17 @@
+@everywhere function setdir(dir)	
+	if isdir(dir)
+		cd(dir)
+	end
+end
+
+@everywhere function setdir()
+	dir = remotecall_fetch(1, ()->pwd())
+	setdir(dir)
+end
+
+
+@everywhere setdir()
+
 @everywhere include("../src/ShiftNMFkMD.jl"); # including the module on all cores
 @everywhere using ShiftNMFk    				# using the module ShiftNMFk on all cores
 
