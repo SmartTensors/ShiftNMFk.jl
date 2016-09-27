@@ -444,7 +444,7 @@ function ShiftNMF(X, noc, opts, varargin...)
           while keepgoing == 1
                  H=Hold.*(grad.^alpha);
                  Hf=fft(H,2);
-                 Hf=Hf[:,1:floor(size(Hf,2)/2)+1];
+                 Hf=Hf[:,1:Int(floor(size(Hf,2)/2))+1];
                  for i=1:size(W,1)
                     Hft=Hf.*exp(T[i,:]'*f);
                     Recf[i,:]=W[i,:]*Hft;

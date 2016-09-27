@@ -250,7 +250,7 @@ function ShiftNMFk_CosCluster(X, maxSource)
 				T=  delays; 
 				X=Array(Float64,size(W,1),size(H,2));
 						Hf=fft(H,2);                         
-						Hf=Hf[:,1:floor(size(Hf,2)/2)+1];      
+						Hf=Hf[:,1:Int(floor(size(Hf,2))/2)+1];      
 						N=size(H,2);                            
 						#f=im*2*pi*[0:N-1]'/N;  		# depricated syntax 
 						f=im*2*pi*collect(0:N-1)'/N;                  
