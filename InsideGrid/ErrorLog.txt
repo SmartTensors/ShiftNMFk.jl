@@ -1,5 +1,0 @@
-NMF runs for 1 Sources are taken below this % of reconstruction Error: 	48	For 1 Sources MaxSpM: 	.8	For 1 Sources we have this many trials after SpM cut: 	96
-NMF runs for 2 Sources are taken below this % of reconstruction Error: 	38	For 2 Sources MaxSpM: 	.8	For 2 Sources we have this many trials after SpM cut: 	25.5
-NMF runs for 3 Sources are taken below this % of reconstruction Error: 	28.000000000000004	For 3 Sources MaxSpM: 	1.1	For 3 Sources we have this many trials after SpM cut: 	11
-NMF runs for 4 Sources are taken below this % of reconstruction Error: 	107.99999999999999	For 4 Sources MaxSpM: 	.8	For 4 Sources we have this many trials after SpM cut: 	26
-NMF runs for 5 Sources are taken below this % of reconstruction Error: 	107.99999999999999	For 5 Sources MaxSpM: 	.8	For 5 Sources we have this many trials after SpM cut: 	15.6

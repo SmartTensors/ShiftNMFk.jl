@@ -1,5 +1,0 @@
-Elapsed time for 1 sources in seconds: 	78.616118589	The average iterations per NMF for 1 are: 	0
-Elapsed time for 2 sources in seconds: 	103.080713746	The average iterations per NMF for 2 are: 	1155287958e-323
-Elapsed time for 3 sources in seconds: 	126.312099077	The average iterations per NMF for 3 are: 	1849932514e-323
-Elapsed time for 4 sources in seconds: 	149.517841959	The average iterations per NMF for 4 are: 	1155287958e-323
-Elapsed time for 5 sources in seconds: 	176.959988241	The average iterations per NMF for 5 are: 	2292997412e-323
