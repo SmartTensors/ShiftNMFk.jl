@@ -18,15 +18,15 @@ end
 X = readcsv("./InputInGrid/Observation.csv");		#Inputing the observation matrix of the desired example
 micPos = readcsv("./InputInGrid/MicPosition.csv"); # The coordinates of the detectors in the grid
 maxSource = 5;										#5 max number of sources
-globalIter = 	100;								# 1000 NMF runs for each guess of a sources								
-nmfIter = 80000;									# 80,000 max number of iterations for each source.
-locIter = 100;										# 1000 minimizations are performed to find the location
+globalIter = 	10;								# 1000 NMF runs for each guess of a sources								
+nmfIter = 3000;									# 80,000 max number of iterations for each source.
+locIter = 10;										# 1000 minimizations are performed to find the location
 numT = 180; 										#The numbes of sample points that make up our signals (time samples) 
 nd = 16;											# The number of detectors in our grid
 
 
 
-shiftNMFk(X, maxSource, globalIter, locIter);					 
+shiftNMFk(X, maxSource, globalIter, nmfIter);					 
 
 Sil, Norm = Plot(X, maxSource);						#Plots the Norm and Silhouette Value graph and returns both 
 

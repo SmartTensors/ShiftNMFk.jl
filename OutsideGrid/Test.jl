@@ -26,7 +26,7 @@ nd = 16;											# The number of detectors in our grid
 
 
 
-shiftNMFk(X, maxSource, globalIter, locIter);					 
+shiftNMFk(X, maxSource, globalIter, nmfIter);					 
 
 Sil, Norm = Plot(X, maxSource);						#Plots the Norm and Silhouette Value graph and returns both 
 
