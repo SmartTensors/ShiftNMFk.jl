@@ -1,6 +1,3 @@
-# loading librarires
-include("Parallel_ShiftNMF.jl")
-
 
 function shiftNMFk(X, maxSource, globalIter, nmfIter)
 

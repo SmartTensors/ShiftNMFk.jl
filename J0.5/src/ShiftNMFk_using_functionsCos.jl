@@ -1,13 +1,11 @@
-# loading librarires
-include("Parallel_ShiftNMF.jl")
-
 
 function shiftNMFk(X, maxSource, globalIter, nmfIter)
 
 	#Trials =  [1, 2, 3, 4, 5];
 	Trials = collect(1:maxSource);
 
-	elapsedTime = cell(length(Trials),4);
+	#elapsedTime = cell(length(Trials),4);		#depricated syntax
+	elapsedTime = Array{Any}(length(Trials),4);
 
 	#X = readcsv("./Input/Observation.csv");
 	inputMatrix = X;

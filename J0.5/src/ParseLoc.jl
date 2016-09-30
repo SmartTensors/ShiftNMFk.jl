@@ -64,7 +64,7 @@ function ParseLoc(micPos)
 	#SoPos = readcsv("SourcePosition.csv");
 	#micPos = readcsv("MicPosition.csv")
 
-	TFD = plot(	layer(x = avgPos[:,1], y = avgPos[:,2], Geom.point, Theme(default_color = colorant"orange")),
+	#=TFD = plot(	layer(x = avgPos[:,1], y = avgPos[:,2], Geom.point, Theme(default_color = colorant"orange")),
 				#layer(x = SoPos[:,1], y = SoPos[:,2], Geom.point, Theme(default_color = colorant"black")),
 				layer(x = micPos[:,1], y = micPos[:,2], Geom.point, Theme(default_color = colorant"magenta")),
 				
@@ -73,7 +73,8 @@ function ParseLoc(micPos)
 		);
 
 
-	draw(SVG("SourceLocations.svg", 20cm, 20cm), TFD);
+	draw(SVG("SourceLocations.svg", 20cm, 20cm), TFD);=#
+	writecsv("FoundSourcePosition.csv", avgPos);
 	return avgPos;
 
 end

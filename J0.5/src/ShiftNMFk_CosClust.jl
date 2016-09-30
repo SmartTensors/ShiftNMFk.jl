@@ -25,8 +25,8 @@ function ShiftNMFk_CosCluster(X, maxSource)
 	numberOfPoints = size(inputMatrix, 1);
 	numberOfSamples = size(inputMatrix, 2);
 
-	VarChange = cell(length(Trials), 6);
-	ALLCOST = cell(length(Trials));
+	VarChange = Array{Any}(length(Trials), 6);
+	ALLCOST = Array{Any}(length(Trials));
 
 
 	for z = Trials
@@ -135,12 +135,12 @@ function ShiftNMFk_CosCluster(X, maxSource)
 					idc = ones(Int64, 1, size(allProcesses,3));
 				end
 
-				idx = cell(z);
-				idxOLD = cell(z);
+				idx = Array{Any}(z);
+				idxOLD = Array{Any}(z);
 
 				# ///////////////// Clustering T ////////////////////
 				
-				orderedT = cell(z);
+				orderedT = Array{Any}(z);
 
 				for d =1:z
 		
@@ -183,7 +183,7 @@ function ShiftNMFk_CosCluster(X, maxSource)
 					else
 						maxSpM = maxSpM + 0.1;
 
-						idx = cell(z);
+						idx = Array{Any}(z);
 						for k = 1:length(idx)
 							idx[k] = idxOLD[k][:];
 						end
@@ -298,6 +298,6 @@ function ShiftNMFk_CosCluster(X, maxSource)
 	end
 			
 			writedlm("ErrorLog.txt", VarChange);
-			Plot(inputMatrix', maxSource);
+			#Plot(inputMatrix', maxSource);
 
 end

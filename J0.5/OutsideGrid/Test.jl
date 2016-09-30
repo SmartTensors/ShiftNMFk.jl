@@ -5,7 +5,7 @@
 end
 
 @everywhere function setdir()
-	dir = remotecall_fetch(1, ()->pwd())
+	dir = remotecall_fetch(()->pwd(), 1 )
 	setdir(dir)
 end
 
@@ -17,7 +17,7 @@ end
 
 X = readcsv("./InputOutGrid/Observation.csv");		#Inputing the observation matrix of the desired example
 micPos = readcsv("./InputOutGrid/MicPosition.csv"); # The coordinates of the detectors in the grid
-maxSource = 3;										#5 max number of sources
+maxSource = 5;										#5 max number of sources
 globalIter = 	10;								# 1000 NMF runs for each guess of a sources								
 nmfIter = 100;									# 80,000 max number of iterations for each source.
 locIter = 10;										# 1000 minimizations are performed to find the location
@@ -26,7 +26,7 @@ nd = 16;											# The number of detectors in our grid
 
 
 
-shiftNMFk(X, maxSource, globalIter, locIter);					 
+shiftNMFk(X, maxSource, globalIter, nmfIter);					 
 
 Sil, Norm = Plot(X, maxSource);						#Plots the Norm and Silhouette Value graph and returns both 
 

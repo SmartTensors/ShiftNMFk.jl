@@ -4,8 +4,8 @@ module ShiftNMFk
     using Clustering
     using Distances
     using Stats
-    using Gadfly
-    using Compose
+    #using Gadfly
+    #using Compose
     using NLopt
 
     export shiftNMFk
@@ -14,12 +14,6 @@ module ShiftNMFk
     export FindLocations
     export ParseLoc
     export AIC_final
-
-    export ShiftNMF
-
-    export Parallel_Tri
-    export PTri
-    export Triangulate
 
     include("ShiftNMF2.jl");
     include("Parallel_ShiftNMF.jl");   
@@ -34,5 +28,6 @@ module ShiftNMFk
 
     include("ParseLoc.jl");
     include("AIC_final.jl");
+    
 
 end # module

@@ -1,7 +1,5 @@
 function Plot(X, maxSource)
 
-	#X = readcsv("./Input/Observation.csv");
-
 	if isdir("./Results") == false
 		println("ERROR: Results directory does not exist!")
 	else
@@ -40,7 +38,7 @@ function Plot(X, maxSource)
 
 		writecsv("Norm.csv", Norm);
 		writecsv("Silhouette.csv", Silhouette);
-
+		#=
 		x = Trials;
 
 		ResultPlot = plot(
@@ -51,6 +49,7 @@ function Plot(X, maxSource)
 		);
 
 		draw(SVG("ResultPlot.svg", 25cm, 20cm), ResultPlot); 
+		=#
 	end
 
 	return Silhouette, Norm
