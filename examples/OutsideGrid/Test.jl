@@ -1,8 +1,10 @@
 @everywhere reload("ShiftNMFk")
 @everywhere ShiftNMFk.setdir()
 
-X = readcsv("./OutsideGrid/InputOutGrid/Observation.csv")		#Inputing the observation matrix of the desired example
-micPos = readcsv("./OutsideGrid/InputOutGrid/MicPosition.csv") # The coordinates of the detectors in the grid
+cd(joinpath(ShiftNMFk.shiftnmfkdir, "examples", "OutsideGrid"))
+
+X = readcsv("./InputOutGrid/Observation.csv")		#Inputing the observation matrix of the desired example
+micPos = readcsv("./InputOutGrid/MicPosition.csv") # The coordinates of the detectors in the grid
 maxSource = 5										#5 max number of sources
 globalIter = 	10								# 1000 NMF runs for each guess of a sources
 nmfIter = 100									# 80,000 max number of iterations for each source.
@@ -21,4 +23,8 @@ aic_min, nopt = ShiftNMFk.AIC( Norm, Sil, numT, nd)		# nopt returns the correct 
 W,H,T,Tstd = ShiftNMFk.ResultsForNumSources(nopt)			#returns the mixing(W), signal(H), and delay(T) matrices for the number
 													#of sources nopt. Also returns sigma of the delays(Tstd)
 
-SourcePositions = ShiftNMFk.FindLocations(W, T, Tstd, micPos, locIter)	#Returns the coordinates of the sources.
+SourcePositions = ShiftNMFk.FindLocations(W, T, Tstd, micPos, locIter)	#Returns the coordinates of the sources
+
+include("plotAnsPanel.jl")
+
+cd(ShiftNMFk.shiftnmfkdir)

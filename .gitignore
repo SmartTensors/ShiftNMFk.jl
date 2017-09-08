@@ -1,0 +1,6 @@
+.DS_Store
+Trials
+Results
+*.txt
+*.csv
+*.json

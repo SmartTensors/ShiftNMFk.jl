@@ -27,7 +27,7 @@ module ShiftNMFk
 	include("setdir.jl")
 
 	function test()
-		include(joinpath(shiftnmfkdir, "InsideGrid", "Test.jl"))
-		include(joinpath(shiftnmfkdir, "OutsideGrid", "Test.jl"))
+		include(joinpath(shiftnmfkdir, "examples", "InsideGrid", "Test.jl"))
+		include(joinpath(shiftnmfkdir, "examples", "OutsideGrid", "Test.jl"))
 	end
 end
