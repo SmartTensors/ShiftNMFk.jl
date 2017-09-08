@@ -51,7 +51,7 @@ shiftby =[17 12 16];
 shiftby =[16 12 17];
 Hnew = Array(Any,ns);
 for i=1:ns
-  Hnew[i] = [zeros(1,shiftby[i]) Ha[i,:]];
+  Hnew[i] = [zeros(1,shiftby[i]) Ha[[i],:]];
 
 end
 
@@ -77,19 +77,19 @@ xdis = 1:size(Ttrue,1);
 =#  
 
 Ttp = vstack( plot( 
-      layer(x=xdis, y=Ta[:,3], #=ymin=sdmin[:,1], ymax=sdmax[:,1], Geom.point, Geom.errorbar=# Geom.bar, Theme(default_color=color("red"), bar_spacing=6mm))
+      layer(x=xdis, y=Ta[:,3], #=ymin=sdmin[:,1], ymax=sdmax[:,1], Geom.point, Geom.errorbar=# Geom.bar, Theme(default_color=colorant"red", bar_spacing=6mm))
       ,layer(x=xdis, y=Ttrue[:,1], Geom.bar)
       , Scale.x_discrete, Guide.xlabel(""), Guide.ylabel("Shift"), Guide.title("Panel D: Delays")
       , Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["blue", "red"])
       ,Theme(minor_label_font_size = 22pt), Guide.yticks(ticks = [-10, 0, 10]), Guide.xticks(ticks = [1, 4, 8, 12, 16]))
 ,  plot(
-      layer(x=xdis, y=Ta[:,2], #=ymin=sdmin[:,2], ymax=sdmax[:,2], Geom.point, Geom.errorbar,=# Geom.bar, Theme(default_color=color("red"), bar_spacing=6mm))
+      layer(x=xdis, y=Ta[:,2], #=ymin=sdmin[:,2], ymax=sdmax[:,2], Geom.point, Geom.errorbar,=# Geom.bar, Theme(default_color=colorant"red", bar_spacing=6mm))
       ,layer(x=xdis, y=Ttrue[:,2], Geom.bar)
       , Scale.x_discrete, Guide.xlabel(""), Guide.ylabel("Shift")
       , Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["blue", "red"])
       ,Theme(minor_label_font_size = 22pt), Guide.yticks(ticks = [-10, 0, 10]), Guide.xticks(ticks = [1, 4, 8, 12, 16]))
 , plot(
-      layer(x=xdis, y=Ta[:,1], #=ymin=sdmin[:,3], ymax=sdmax[:,3], Geom.point, Geom.errorbar,=# Geom.bar, Theme(default_color=color("red"), bar_spacing=6mm)) 
+      layer(x=xdis, y=Ta[:,1], #=ymin=sdmin[:,3], ymax=sdmax[:,3], Geom.point, Geom.errorbar,=# Geom.bar, Theme(default_color=colorant"red", bar_spacing=6mm)) 
       , layer(x=xdis, y=Ttrue[:,3], Geom.bar)
       , Scale.x_discrete, Guide.xlabel(""), Guide.ylabel("Shift")
       , Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["blue", "red"])
@@ -100,14 +100,14 @@ Ttp = vstack( plot(
 
 
 Htp = vstack(plot( layer(x=x, y=Htrue[1,:], Geom.line, Theme(default_color=colorant"green"))
-    ,layer(x=1:length(Hnew[3]), y=Hnew[3], Geom.point, Theme(default_color=color("blue")))
+    ,layer(x=1:length(Hnew[3]), y=Hnew[3], Geom.point, Theme(default_color=colorant"blue"))
     , Guide.xlabel(""), Guide.ylabel("Mag"), Guide.title("Panel C: Signals"), Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["green", "blue",])
     ,Theme(minor_label_font_size = 20pt))
-, plot( layer(x=x, y=Htrue[2,:], Geom.line, Theme(default_color=color("green")))
-    ,layer(x=1:length(Hnew[2]), y=Hnew[2], Geom.point, Theme(default_color=color("blue")))
+, plot( layer(x=x, y=Htrue[2,:], Geom.line, Theme(default_color=colorant"green"))
+    ,layer(x=1:length(Hnew[2]), y=Hnew[2], Geom.point, Theme(default_color=colorant"blue"))
     , Guide.xlabel(""), Guide.ylabel("Mag"),  Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["green", "blue",])
     ,Theme(minor_label_font_size = 20pt))
-, plot( layer(x=x, y=Htrue[3,:], Geom.line, Theme(default_color=color("green")))
+, plot( layer(x=x, y=Htrue[3,:], Geom.line, Theme(default_color=colorant"green"))
     ,layer(x=1:length(Hnew[1]), y=Hnew[1], Geom.point, Theme(default_color=colorant"blue"))
     , Guide.xlabel(""), Guide.ylabel("Mag"),  Guide.manual_color_key("Legend", ["True Value", "Found Value"], ["green", "blue",])
     ,Theme(minor_label_font_size = 20pt))
@@ -151,8 +151,8 @@ end
 x = Trials;
 
 ResultPlot = plot(
-  layer(x=x, y=Norm, Geom.point, Geom.line, Theme(default_color=color("green"))),
-  layer(x=x, y=Silhouette, Geom.point,  Geom.line, Theme(default_color=color("red"))),
+  layer(x=x, y=Norm, Geom.point, Geom.line, Theme(default_color=colorant"green")),
+  layer(x=x, y=Silhouette, Geom.point,  Geom.line, Theme(default_color=colorant"red")),
   Guide.xlabel("Number of Sources"), Guide.ylabel("Fro. Norm and Silhouette Value"), Guide.title("Results"), Guide.manual_color_key("Legend", 
     ["Silhouette Value", "Norm Minimization"], ["red", "green",])
 );
@@ -170,5 +170,22 @@ Allt = hstack(Left ,Right);
 #draw(SVG("ResCompare2.svg", 50cm, 25cm), Allt);
 
 draw(SVG("ResComparePanel.svg", 50cm, 50cm), Allt);
+
+#////////////////// Location Plot ////////////////////////////////
+
+SoPos = readcsv("./InputOutGrid/SourcePosition.csv");
+micPos = readcsv("./InputOutGrid/MicPosition.csv");
+avgPos = readcsv("FoundSourcePosition.csv");
+
+  TFD = plot( layer(x = avgPos[:,1], y = avgPos[:,2], Geom.point, Theme(default_color = colorant"orange")),
+        layer(x = SoPos[:,1], y = SoPos[:,2], Geom.point, Theme(default_color = colorant"black")),
+        layer(x = micPos[:,1], y = micPos[:,2], Geom.point, Theme(default_color = colorant"magenta")),
+        
+         Guide.manual_color_key("Legend", [ "Real Location of Sources", "Location of Sensors", "FOund Sources"], ["black", "magenta", "orange"]),
+         
+    );
+
+
+  draw(SVG("SourceLocations.svg", 20cm, 20cm), TFD);
 
 
