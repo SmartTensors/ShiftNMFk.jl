@@ -14,13 +14,13 @@ function Plot(X, maxSource)
 			#///////// This code computes the reconstruction from our averaged answers ///////
 			#=Rec = readcsv("./Results/Reconstruction$numberOfProcesses.csv")
 			#normalize X & Rec
-			for i=1:size(X,1)
-			    sumX=sum(X[i,:])
-			    sumRec=sum(Rec[i,:])
-			    X[i,:] = X[i,:]./sumX
-			    Rec[i,:] = Rec[i,:]./sumRec
-		  	end
-			cost=0.5*vecnorm(X-Rec,2)^2
+			for i=1:size(X, 1)
+			  sumX=sum(X[i, :])
+			  sumRec=sum(Rec[i, :])
+			  X[i, :] = X[i, :]./sumX
+			  Rec[i, :] = Rec[i, :]./sumRec
+		 	end
+			cost=0.5*vecnorm(X-Rec, 2)^2
 			=#
 			cost = readcsv("./Results/Cost$numberOfProcesses.csv")
 			Norm[z] = mean(cost)
@@ -33,10 +33,10 @@ function Plot(X, maxSource)
 		#=
 		x = Trials
 		ResultPlot = plot(
-		  layer(x=x, y=Norm, Geom.point, Geom.line, Theme(default_color=colorant"green")),
-		  layer(x=x, y=Silhouette, Geom.point,  Geom.line, Theme(default_color=colorant"red")),
-		  Guide.xlabel("Number of Sources"), Guide.ylabel("Fro. Norm and Silhouette Value"), Guide.title("Results"), Guide.manual_color_key("Legend",
-		  	["Silhouette Value", "Norm Minimization"], ["red", "green",])
+		 layer(x=x, y=Norm, Geom.point, Geom.line, Theme(default_color=colorant"green")),
+		 layer(x=x, y=Silhouette, Geom.point, Geom.line, Theme(default_color=colorant"red")),
+		 Guide.xlabel("Number of Sources"), Guide.ylabel("Fro. Norm and Silhouette Value"), Guide.title("Results"), Guide.manual_color_key("Legend",
+		 	["Silhouette Value", "Norm Minimization"], ["red", "green", ])
 		)
 		draw(SVG("ResultPlot.svg", 25cm, 20cm), ResultPlot)
 		=#

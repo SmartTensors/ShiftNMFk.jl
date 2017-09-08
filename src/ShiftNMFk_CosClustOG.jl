@@ -1,17 +1,17 @@
 function ResultsForNumSources(N);
-	N = N[1];
+	nn = N[1];
 	if isdir("./Results") == false
 		println("ERROR: Results directory does not exist!")
 		throw(ArgumentError("ERROR: Results directory does not exist!"))
 	else
-		W = readcsv("./Results/W$N.csv");
-		H = readcsv("./Results/H$N.csv");
-		T = readcsv("./Results/T$N.csv");
-		Tstd = readcsv("./Results/Tstd$N.csv");
+		W = readcsv("./Results/W$nn.csv");
+		H = readcsv("./Results/H$nn.csv");
+		T = readcsv("./Results/T$nn.csv");
+		Tstd = readcsv("./Results/Tstd$nn.csv");
 	end
 	return W, H, T, Tstd;
 end
-# Function definitions
+
 function cluster_NMF_solutions(allProcesses, clusterRepeatMax)
 	numberOfPoints = size(allProcesses, 1);
 	numberOfProcesses = size(allProcesses, 2);
@@ -48,6 +48,7 @@ function cluster_NMF_solutions(allProcesses, clusterRepeatMax)
 	end
 	return idx;
 end
+
 function final_processes_and_mixtures(allProcesses, allMixtures, allDelays, idx)
 	numberOfSamples = size(allMixtures, 2);
 	numberOfPoints = size(allProcesses, 1);
@@ -86,12 +87,10 @@ function final_processes_and_mixtures(allProcesses, allMixtures, allDelays, idx)
 	end
 	return processes, mixtures, delays, avgStabilityProcesses
 end
+
 function ShiftNMFk_CosCluster(X, maxSource)
-	if typeof(maxSource) == Int;
-		Trials = collect(1:maxSource);
-	else
-		Trials = maxSource;
-	end
+	#Trials = [1, 2, 3, 4, 5];
+	Trials = collect(1:maxSource);
 	inputMatrix = X;
 	inputMatrix=inputMatrix';
 	numberOfPoints = size(inputMatrix, 1);
@@ -195,7 +194,7 @@ function ShiftNMFk_CosCluster(X, maxSource)
 				StdTrue	 = Array{Float64}(size(CenterTrue[1], 2));
 				Tmean = Array{Float64}(size(CenterTrue[1], 2));
 				for i=1:size(CenterTrue[1], 2)
-					Tpos = abs.(CenterTrue[1][:, i]);
+					Tpos = abs(CenterTrue[1][:, i]);
 					Tmean[i] = mean(Tpos);
 					StdTrue[i] = std(Tpos);
 				end
@@ -250,21 +249,16 @@ function ShiftNMFk_CosCluster(X, maxSource)
 		Hf=Hf[:, 1:Int(floor(size(Hf, 2)/2))+1];
 		N=size(H, 2);
 		f=im*2*pi*collect(0:N-1)'/N;
-		#f=f[1:size(Hf, 2)]'*(-1);
-		if VERSION < v"0.6"
-			f=f[1:size(Hf, 2)]'*(-1);
-		else
-			f=f[1:size(Hf, 2)]*(-1);
-		end
+		f=f[1:size(Hf, 2)]'*(-1);
 		for i=1:size(W, 1)
-			Hft=Hf[usecomp, :].*exp.(T[i:i, usecomp]'*f);
+			Hft=Hf[usecomp, :].*exp(T[[i], usecomp]'*f);
 			if mod(size(X, 2), 2)==0
 				Hft=[Hft conj(Hft[:, end-1:-1:2])];
 			else
 				Hft=[Hft conj(Hft[:, end:-1:2])];
 			end
 			Ht=real(ifft(Hft, 2));
-			X[i:i, :]=W[i:i, usecomp]*Ht;
+			X[[i], :]=W[[i], usecomp]*Ht;
 		end
 		X[X.<0]=0;
 		dataRecon = X'; #processes * mixtures and delays;

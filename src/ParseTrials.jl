@@ -8,22 +8,22 @@ function ParseTrials(k)
 	for i=1:size(Try)[1]
 		allCost[i] = Try[i][5]
 		for s=1:size(Try[1][1])[1]
-			allW[:,s,i] =  Try[i][1][s]
-			allT[:,s,i] =  Try[i][3][s]
+			allW[:, s, i] = Try[i][1][s]
+			allT[:, s, i] = Try[i][3][s]
 		end
 		for g=1:size(Try[1][2])[1]
-			allH[:,g,i] =  Try[i][2][g]
+			allH[:, g, i] = Try[i][2][g]
 		end
 	end
-	#///////////////////  Normalize H and W  ///////////////////////////
-	for c=1:size(allH,3)
-		for i=1:size(allH,1)
-		    sumH=sum(allH[i,:,c])
-		    allH[i,:,c] = allH[i,:,c]./sumH
-		    allW[:,i,c] = allW[:,i,c].*sumH
+	#/////////////////// Normalize H and W ///////////////////////////
+	for c=1:size(allH, 3)
+		for i=1:size(allH, 1)
+			sumH=sum(allH[i, :, c])
+			allH[i, :, c] = allH[i, :, c]./sumH
+			allW[:, i, c] = allW[:, i, c].*sumH
 		end
 	end
-	Vars = Array{Float64}(size(allH,3))
+	Vars = Array{Float64}(size(allH, 3))
 	for i=1:length(Vars)
 		Vars[i] = sqrt(1-Try[i][4])
 	end
