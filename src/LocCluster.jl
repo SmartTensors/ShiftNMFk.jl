@@ -1,4 +1,3 @@
-
 function FindLocations(W, T, Tstd, micPos, globIter)
 	#globIter = 100
 	ns = size(W,2)

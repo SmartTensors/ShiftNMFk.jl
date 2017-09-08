@@ -1,7 +1,10 @@
 function execute(X, maxSource, globalIter, nmfIter)
-	#Trials =  [1, 2, 3, 4, 5]
-	Trials = collect(1:maxSource)
-	#elapsedTime = cell(length(Trials),4)		#depricated syntax
+	if typeof(maxSource) == Int
+		Trials = collect(1:maxSource)
+	else
+		Trials = maxSource
+	end
+	#elapsedTime = cell(length(Trials),4);		#depricated syntax
 	elapsedTime = Array{Any}(length(Trials),4)
 	#X = readcsv("./Input/Observation.csv")
 	inputMatrix = X
@@ -18,8 +21,8 @@ function execute(X, maxSource, globalIter, nmfIter)
 		# reading input file and initilizing arrays
 		numberOfPoints   = size(inputMatrix, 1)
 		numberOfSamples = size(inputMatrix, 2)
-		allProcesses = zeros( numberOfPoints, numberOfProcesses, globalIter )
-		allMixtures  = zeros( numberOfProcesses, numberOfSamples, globalIter )
+		allProcesses = zeros(numberOfPoints, numberOfProcesses, globalIter)
+		allMixtures  = zeros(numberOfProcesses, numberOfSamples, globalIter)
 		allDelays = zeros(size(allMixtures))
 		allCost = Array{Float64}(globalIter)
 		Vars = Array{Float64}(globalIter)
@@ -27,8 +30,8 @@ function execute(X, maxSource, globalIter, nmfIter)
 		opts=Dict()
 		opts = Dict("runit"=>0, "convcrit"=>1e-8, "auto_corr"=>1, "maxiter"=>nmfIter, "dispiter"=>0)
 		# DON'T FORGET the input matrix needs to be transposed as well as the output W and H matricies
-		All_NMFanswers = Parallel_ShiftNMF2(globalIter, nmfIter, inputMatrix' ,numberOfProcesses, opts)
-	# //////////////////////////////////////////////////////////
+		All_NMFanswers = Parallel_ShiftNMF2(globalIter, nmfIter, inputMatrix',numberOfProcesses, opts)
+		# //////////////////////////////////////////////////////////
 		if isdir("./Trials") == false
 			mkdir("./Trials")
 		end

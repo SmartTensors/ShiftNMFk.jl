@@ -1,4 +1,3 @@
-
 function ParseTrials(k)
 	#Try = JSON.parsefile(string("TrialX$k.json"))
 	Try = JSON.parsefile(string("./Trials/TrialX$k.json"))
@@ -19,14 +18,14 @@ function ParseTrials(k)
 	#///////////////////  Normalize H and W  ///////////////////////////
 	for c=1:size(allH,3)
 		for i=1:size(allH,1)
-			sumH=sum(allH[i,:,c])
-			allH[i,:,c] = allH[i,:,c]./sumH
-			allW[:,i,c] = allW[:,i,c].*sumH
+		    sumH=sum(allH[i,:,c])
+		    allH[i,:,c] = allH[i,:,c]./sumH
+		    allW[:,i,c] = allW[:,i,c].*sumH
 		end
 	end
 	Vars = Array{Float64}(size(allH,3))
 	for i=1:length(Vars)
-		Vars[i] = sqrt( 1-Try[i][4])
+		Vars[i] = sqrt(1-Try[i][4])
 	end
-	return allW, allH, allT, allCost , Vars
+	return allW, allH, allT, allCost, Vars
 end

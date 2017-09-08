@@ -5,8 +5,8 @@ function ParseLoc(micPos)
 	allSpeed = Array{Float64}(length(Try))
 	AllInit = Array{Float64}(length(Try[1][3]), length(Try))
 	allMinf = Array{Float64}(length(Try))
-	Center = Array(Any, ns)
-	polPos = Array(Any, ns)
+	Center = Array{Any}(ns)
+	polPos = Array{Any}(ns)
 	for i = 1:length(Try)
 		if length(Try[i]) == 4
 			println(i)
@@ -28,12 +28,12 @@ function ParseLoc(micPos)
 	end
 	AllPol = zeros(size(polPos[1]))
 	for i=1:ns
-		AllPol += polPos[i]
+		AllPol = AllPol + polPos[i]
 	end
 	#id = find(quantile(AllPol[1,1,:][:], .25) .< AllPol[1,1,:].<quantile(AllPol[1,1,:][:], .75))
 	id = find(AllPol[1,1,:].<=quantile(AllPol[1,1,:][:], .50))
 	idx = idx[id]
-	v = sqrt(allPositions[:,1,idx].^2 + allPositions[:,2,idx].^2)
+	v = sqrt.(allPositions[:,1,idx].^2 + allPositions[:,2,idx].^2)
 	Vstd = std(v,3)
 	for i=1:ns
 		avgPos[i,:] = [median(allPositions[i,1,idx])  median(allPositions[i,2,idx])]
@@ -41,15 +41,18 @@ function ParseLoc(micPos)
 		#rad[i] = sqrt(posStd[i,1].^2 + posStd[i,2].^2)
 	end
 	rad[:]=Vstd[:]
+	avgSpeed = mean(allSpeed[idx])
+	writecsv("FoundSourcePositions.csv",avgPos)
+	writecsv("FoundSpeed.csv", avgSpeed)
 	# ///////////////////////////// Plotting /////////////////////////////////////////////////////////////////////////////////////
 	#SoPos = readcsv("SourcePosition.csv")
 	#micPos = readcsv("MicPosition.csv")
 	#=TFD = plot(	layer(x = avgPos[:,1], y = avgPos[:,2], Geom.point, Theme(default_color = colorant"orange")),
 				#layer(x = SoPos[:,1], y = SoPos[:,2], Geom.point, Theme(default_color = colorant"black")),
 				layer(x = micPos[:,1], y = micPos[:,2], Geom.point, Theme(default_color = colorant"magenta")),
-				 Guide.manual_color_key("Legend", [ "Real Location of Sources", "Location of Sensors", "FOund Sources"], ["black", "magenta", "orange"]),
+				 Guide.manual_color_key("Legend", ["Real Location of Sources", "Location of Sensors", "FOund Sources"], ["black", "magenta", "orange"]),
 		)
-	draw(SVG("SourceLocations.svg", 20cm, 20cm), TFD)=#
+	draw(SVG("SourceLocations.svg", 20cm, 20cm), TFD);=#
 	writecsv("FoundSourcePosition.csv", avgPos)
-	return avgPos
+	return avgPos, avgSpeed
 end
