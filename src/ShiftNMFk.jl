@@ -7,17 +7,27 @@ module ShiftNMFk
 	#using Compose
 	using NLopt
 
-	include("ShiftNMF2.jl");
-	include("Parallel_ShiftNMF.jl");
-	include("ParseTrials.jl");
-	include("Plot.jl");
-	include("ShiftNMFk_CosClust.jl");
-	include("ShiftNMFk_using_functionsCos.jl");
+	const shiftnmfkdir = splitdir(splitdir(Base.source_path())[1])[1]
 
-	include("TriangulatePos.jl");
-	include("Parallel_Triangle.jl");
-	include("LocCluster.jl");
+	cd(shiftnmfkdir)
 
-	include("ParseLoc.jl");
-	include("AIC_final.jl");
+	include("execute.jl")
+	include("execute_parallel.jl")
+	include("execute_using_functionsCos.jl")
+	include("ParseTrials.jl")
+	include("Plot.jl")
+	include("CosClust.jl")
+
+	include("TriangulatePos.jl")
+	include("Parallel_Triangle.jl")
+	include("LocCluster.jl")
+
+	include("ParseLoc.jl")
+	include("AIC.jl")
+	include("setdir.jl")
+
+	function test()
+		include(joinpath(shiftnmfkdir, "InsideGrid", "Test.jl"))
+		include(joinpath(shiftnmfkdir, "OutsideGrid", "Test.jl"))
+	end
 end

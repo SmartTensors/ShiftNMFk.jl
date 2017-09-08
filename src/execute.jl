@@ -1,5 +1,6 @@
 #using ProfileView
 
+#TODO get rid of the matlab-style function options; switch to julia keywords with default values
 function mgetopt(opts, varname, default, varargin...)
 	if haskey(opts, varname)
 		var = opts[varname]
@@ -71,7 +72,7 @@ function update_TmH(T, P, Recfd, Hall, Told)
 	Xnew = Xf-Recf
 	RepX= Array{Complex{Float64}}(size(Xnew, 1), size(Xnew, 2), size(Recfd, 3))
 	for i=1:size(Recfd, 3)
-		RepX[:, :, i] = conj(Xnew[:, :])
+		RepX[:, :, i] = conj(Xnew)
 	end
 	Q=Recfd.*RepX
 	WnF=w.*(f.^2)
@@ -126,11 +127,12 @@ function update_TmH(T, P, Recfd, Hall, Told)
 			kill+=1
 		end
 	end
-	T = mod(real(T), sizeX2)
+	T = mod.(real(T), sizeX2)
 	ind=find(T.>floor(sizeX2/2))
 	T[ind]=T[ind]-sizeX2
 	return T, nyT, cost
 end
+
 function execute(X, noc, opts, varargin...)
 	# can get the return values by calling:  W, H, T, varexpl, cost = ShiftNMF(X, noc, argin)
 	#opts = Dict();            #opts is a dictionary in julia instead of a struct in MATLAB
@@ -185,7 +187,7 @@ function execute(X, noc, opts, varargin...)
 	end
 	#Normalizing W from original ShiftNMF
 	#W=W./repmat(sum(W, 2), 1, size(W, 2))
-	W=W./repmat(sqrt(sum(W.^2, 1)), size(W, 1), 1)
+	W=W./repmat(sqrt.(sum(W.^2, 1)), size(W, 1), 1)
 	nyT=mgetopt(opts, "nyT", 1)
 	maxiter=mgetopt(opts, "maxiter", 1000)
 	conv_crit=mgetopt(opts, "convcrit", 1e-6)

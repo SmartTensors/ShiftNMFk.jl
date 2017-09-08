@@ -1,17 +1,5 @@
-@everywhere function setdir(dir)
-	if isdir(dir)
-		cd(dir)
-	end
-end
-
-@everywhere function setdir()
-	dir = remotecall_fetch(()->pwd(), 1 )
-	setdir(dir)
-end
-
-@everywhere setdir()
-
-@everywhere reload("ShiftNMFk")    				# using the module ShiftNMFk on all cores
+@everywhere reload("ShiftNMFk")
+@everywhere ShiftNMFk.setdir()
 
 X = readcsv("./OutsideGrid/InputOutGrid/Observation.csv")		#Inputing the observation matrix of the desired example
 micPos = readcsv("./OutsideGrid/InputOutGrid/MicPosition.csv") # The coordinates of the detectors in the grid
@@ -28,7 +16,7 @@ ShiftNMFk.execute(X, maxSource, globalIter, nmfIter)
 
 Sil, Norm = ShiftNMFk.Plot(X, maxSource)						#Plots the Norm and Silhouette Value graph and returns both
 
-aic_min, nopt = ShiftNMFk.AIC_final( Norm, Sil, numT, nd)		# nopt returms the correct number of sources in the experiment.
+aic_min, nopt = ShiftNMFk.AIC( Norm, Sil, numT, nd)		# nopt returns the correct number of sources in the experiment.
 
 W,H,T,Tstd = ShiftNMFk.ResultsForNumSources(nopt)			#returns the mixing(W), signal(H), and delay(T) matrices for the number
 													#of sources nopt. Also returns sigma of the delays(Tstd)

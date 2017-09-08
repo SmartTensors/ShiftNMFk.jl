@@ -1,4 +1,4 @@
-function AIC_final(RECON, SILL_AVG, numT, nd)
+function AIC(RECON, SILL_AVG, numT, nd)
 	siluet= SILL_AVG
 	Norm = RECON
 	ndata = numT*nd	# nd is the number of detectors, numT is the number of time points (80 in diffNMF example)

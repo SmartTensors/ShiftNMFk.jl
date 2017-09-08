@@ -1,5 +1,5 @@
 function Plot(X, maxSource)
-	if isdir("./Results") == false
+	if !isdir("./Results")
 		println("ERROR: Results directory does not exist!")
 	else
 		if typeof(maxSource) == Int

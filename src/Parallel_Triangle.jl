@@ -4,7 +4,7 @@ end
 
 function Parallel_Tri(pnum, T, Tstd, W, micPos, xtol)
 	cores=nprocs()
-	sendto(1:cores, T=T)
+	sendto(1:cores, T=T) #TODO i do not think sendto is needed
 	sendto(1:cores, Tstd=Tstd)
 	sendto(1:cores, W=W)
 	sendto(1:cores, micPos=micPos)

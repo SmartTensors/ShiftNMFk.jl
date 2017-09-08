@@ -30,7 +30,7 @@ function execute(X, maxSource, globalIter, nmfIter)
 		opts=Dict()
 		opts = Dict("runit"=>0, "convcrit"=>1e-8, "auto_corr"=>1, "maxiter"=>nmfIter, "dispiter"=>0)
 		# DON'T FORGET the input matrix needs to be transposed as well as the output W and H matricies
-		All_NMFanswers = Parallel_ShiftNMF2(globalIter, nmfIter, inputMatrix', numberOfProcesses, opts)
+		All_NMFanswers = Parallel_execute(globalIter, nmfIter, inputMatrix', numberOfProcesses, opts)
 		# //////////////////////////////////////////////////////////
 		if isdir("./Trials") == false
 			mkdir("./Trials")
@@ -45,6 +45,6 @@ function execute(X, maxSource, globalIter, nmfIter)
 		elapsedTime[z, 4] = mean(Steps)
 	end
 	writedlm("Output.txt", elapsedTime)
-	ShiftNMFk_CosCluster(X, maxSource)
+	CosCluster(X, maxSource)
 	return All_NMFanswers
 end

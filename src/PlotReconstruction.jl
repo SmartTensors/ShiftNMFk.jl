@@ -1,5 +1,5 @@
 function PlotReconstruction(Observation, nSources)
-	if isdir("./Results") == false
+	if !isdir("./Results")
 		println("ERROR: Results directory does not exist!")
 	else
 		W = readcsv("./Results/W$nSources.csv")

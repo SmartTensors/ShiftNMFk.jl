@@ -1,17 +1,17 @@
 function ResultsForNumSources(N);
-	N = N[1];
+	nn = N[1];
 	if isdir("./Results") == false
 		println("ERROR: Results directory does not exist!")
 		throw(ArgumentError("ERROR: Results directory does not exist!"))
 	else
-		W = readcsv("./Results/W$N.csv");
-		H = readcsv("./Results/H$N.csv");
-		T = readcsv("./Results/T$N.csv");
-		Tstd = readcsv("./Results/Tstd$N.csv");
+		W = readcsv("./Results/W$nn.csv");
+		H = readcsv("./Results/H$nn.csv");
+		T = readcsv("./Results/T$nn.csv");
+		Tstd = readcsv("./Results/Tstd$nn.csv");
 	end
 	return W, H, T, Tstd;
 end
-# Function definitions
+
 function cluster_NMF_solutions(allProcesses, clusterRepeatMax)
 	numberOfPoints = size(allProcesses, 1);
 	numberOfProcesses = size(allProcesses, 2);
@@ -48,6 +48,7 @@ function cluster_NMF_solutions(allProcesses, clusterRepeatMax)
 	end
 	return idx;
 end
+
 function final_processes_and_mixtures(allProcesses, allMixtures, allDelays, idx)
 	numberOfSamples = size(allMixtures, 2);
 	numberOfPoints = size(allProcesses, 1);
@@ -86,7 +87,8 @@ function final_processes_and_mixtures(allProcesses, allMixtures, allDelays, idx)
 	end
 	return processes, mixtures, delays, avgStabilityProcesses
 end
-function ShiftNMFk_CosCluster(X, maxSource)
+
+function CosCluster(X, maxSource)
 	if typeof(maxSource) == Int;
 		Trials = collect(1:maxSource);
 	else
