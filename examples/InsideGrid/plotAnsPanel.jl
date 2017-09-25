@@ -34,8 +34,8 @@ end
 
 
 
-WaWide = Array{Float64}(, size(Wa, 1), 6, size(Wa, 2));
-WtrueWide = Array{Float64}(, size(Wa, 1), 6, size(Wa, 2));
+WaWide = Array{Float64}(size(Wa, 1), 6, size(Wa, 2));
+WtrueWide = Array{Float64}(size(Wa, 1), 6, size(Wa, 2));
 for i = 1:size(Ta,2)
 	WaWide[:,:,i] = [Wa[:,i] Wa[:,i] Wa[:,i] Wa[:,i] Wa[:,i] Wa[:,i]];
 	WtrueWide[:,:,i] = [Wtrue[:,i] Wtrue[:,i] Wtrue[:,i] Wtrue[:,i] Wtrue[:,i] Wtrue[:,i]];
@@ -119,8 +119,8 @@ X = readcsv("./InputInGrid/Observation.csv");
 
 Trials = [1, 2, 3, 4, 5];
 
-Norm = Array{Float64}(, size(Trials));
-Silhouette = Array{Float64}(, size(Trials));
+Norm = Array{Float64}(size(Trials));
+Silhouette = Array{Float64}(size(Trials));
 
 for z = 1:length(Trials)
 
