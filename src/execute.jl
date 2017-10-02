@@ -334,7 +334,7 @@ function execute(X, noc, opts, varargin...)
 					gradconstr=lambda*HL*L'
 				end
 				indp = find(x->(x > 0), gradconstr)
-				indp = find(x->(x < 0), gradconstr)
+				indn = find(x->(x < 0), gradconstr) # originally here was indp; it should be indn
 				gradconp[indp]=gradconstr[indp]
 				gradconn[indn]=-gradconstr[indn]
 				grad=(gradnHt+gradconn)./(gradpHt+gradconp+eps())
