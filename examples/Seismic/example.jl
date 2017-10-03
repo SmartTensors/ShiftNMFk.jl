@@ -20,7 +20,7 @@ ShiftNMFk.execute(X, maxSource, globalIter, nmfIter)
 
 Sil, Norm     = ShiftNMFk.Plot(X, maxSource)
 
-aic_min, nopt = ShiftNMFk.AIC_final( Norm, Sil, numT, nd)
+aic_min, nopt = ShiftNMFk.AIC( Norm, Sil, numT, nd)
 
 W,H,T,Tstd    = ShiftNMFk.ResultsForNumSources(nopt)
 
