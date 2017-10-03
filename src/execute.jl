@@ -134,7 +134,6 @@ function update_TmH(T, P, Recfd, Hall, Told)
 end
 
 function execute(X::Matrix, noc::Int64, opts, varargin...)
-	info("Execute ...")
 	# can get the return values by calling:  W, H, T, varexpl, cost = ShiftNMF(X, noc, argin)
 	#opts = Dict();            #opts is a dictionary in julia instead of a struct in MATLAB
 	if length(varargin)>0
