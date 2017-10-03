@@ -1,4 +1,5 @@
-function execute(X, maxSource, globalIter, nmfIter)
+function execute(X::Matrix, maxSource::Int64, globalIter::Int64, nmfIter::Int64)
+	info("Execute using ...")
 	if typeof(maxSource) == Int
 		Trials = collect(1:maxSource)
 	else
