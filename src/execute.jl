@@ -158,12 +158,12 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 			else
 				println("Now Estimating ", k, " th solution")
 			end
-			info("varexpl $varexpl varexplold $varexplold")
 			optsn = opts
 			optsn = merge(optsn, Dict("dispiter"=>0))
 			optsn = merge(optsn, Dict("runit"=>1))
 			optsn = merge(optsn, Dict("maxiter"=>25))
 			Wq, Hq, Tq, varexpl, cost= execute(X, noc, optsn)
+			info("varexpl $varexpl varexplold $varexplold")
 			#cost=Int64
 			if varexpl>varexplold
 				println("Best variation explained ", varexpl)
@@ -451,7 +451,7 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 		end
 	end
 	if(iter >= maxiter)
-		infor("Stopped because max # of iterations reached")
+		info("Stopped because max # of iterations reached")
 	elseif(dcost<cost*conv_crit)
 		info("Stopped because dcost is smaller than cost*conc_criteria")
 		info(dcost)
