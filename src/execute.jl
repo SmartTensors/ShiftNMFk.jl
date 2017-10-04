@@ -147,7 +147,7 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 	cost=1
 	runit = mgetopt(opts, "runit", 0)
 	if !haskey(opts, "H") && runit != 1
-		println("Finding the best out of", 10, "initial solutions")
+		info("Finding the best out of ", 10, " initial solutions")
 		for k=1:10
 			if k==1
 				println("Now Estimating ", k, " st solution")
@@ -158,6 +158,7 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 			else
 				println("Now Estimating ", k, " th solution")
 			end
+			info("varexpl $varexpl varexplold $varexplold")
 			optsn = opts
 			optsn = merge(optsn, Dict("dispiter"=>0))
 			optsn = merge(optsn, Dict("runit"=>1))
@@ -450,12 +451,12 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 		end
 	end
 	if(iter >= maxiter)
-		println("Stopped because max # of iterations reached")
+		infor("Stopped because max # of iterations reached")
 	elseif(dcost<cost*conv_crit)
-		println("Stopped because dcost is smaller than cost*conc_criteria")
-		println(dcost)
+		info("Stopped because dcost is smaller than cost*conc_criteria")
+		info(dcost)
 	else
-		println("I dont know why it stopped")
+		println("Unknown why it stopped")
 	end
 	#cost=costiter
 	#Align H and T
