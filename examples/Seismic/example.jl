@@ -26,5 +26,5 @@ W,H,T,Tstd    = ShiftNMFk.ResultsForNumSources(nopt)
 
 SourcePositions = ShiftNMFk.FindLocations(W, T, Tstd, micPos, locIter)
 
-include("../src/PlotReconstruction.jl") # Including function that plots sensors
+include("../../src/PlotReconstruction.jl") # Including function that plots sensors
 PlotReconstruction(X,nopt)

@@ -24,8 +24,8 @@ function PlotReconstruction(Observation, nSources)
 		for nMics = 1:size(X, 1)
 			RecCorr = cor(X[[nMics], :]', Rec[[nMics], :]')
 			ResultPlot = plot(
-			 layer(x=x, y=X[[nMics], :], Geom.line, Theme(default_color=colorant"green")),
-			 layer(x=x, y=Rec[[nMics], :], Geom.point, Theme(default_color=colorant"red")),
+			 layer(x=x, y=X[[nMics], :], Geom.line, Theme(default_color=parse(Colors.Colorant, "green"))),
+			 layer(x=x, y=Rec[[nMics], :], Geom.point, Theme(default_color=parse(Colors.Colorant, "red"))),
 			 Guide.xlabel("Sample Points"), Guide.ylabel("Normalized Signal Amplitude"), Guide.title("Sensor: $nMics With $RecCorr Correlation"), Guide.manual_color_key("Legend",
 				["Reconstruction", "Original Observatons"], ["red", "green", ])
 			)
