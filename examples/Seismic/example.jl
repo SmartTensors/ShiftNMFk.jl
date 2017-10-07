@@ -14,6 +14,8 @@ locIter    = 10;								# 1000 minimizations are performed to find the location
 numT       = size(X,2); 							# The number of sample points that make up our signals (time samples)
 nd         = size(micPos,1);							# The number of detectors in our grid
 
+srand(1)
+
 ShiftNMFk.execute(X, maxSource, globalIter, nmfIter)
 
 # ShiftNMFk.ShiftNMFk_CosClust(X, maxSource)
