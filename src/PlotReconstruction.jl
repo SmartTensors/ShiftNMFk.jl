@@ -1,3 +1,5 @@
+import Gadfly
+
 function PlotReconstruction(Observation, nSources)
 	if !isdir("./Results")
 		warn("Results directory does not exist!")
@@ -24,15 +26,15 @@ function PlotReconstruction(Observation, nSources)
 	x = 1:size(X, 2)
 	for nMics = 1:size(X, 1)
 		RecCorr = cor(X[[nMics], :]', Rec[[nMics], :]')
-		ResultPlot = plot(
-			layer(x=x, y=X[[nMics], :], Geom.line, Theme(default_color=parse(Colors.Colorant, "green"))),
-			layer(x=x, y=Rec[[nMics], :], Geom.point, Theme(default_color=parse(Colors.Colorant, "red"))),
-			Guide.xlabel("Sample Points"), Guide.ylabel("Normalized Signal Amplitude"), Guide.title("Sensor: $nMics With $RecCorr Correlation"), Guide.manual_color_key("Legend",
+		ResultPlot = Gadfly.plot(
+		    Gadfly.layer(x=x, y=X[[nMics], :], Gadfly.Geom.line, Gadfly.Theme(default_color=parse(Colors.Colorant, "green"))),
+			Gadfly.layer(x=x, y=Rec[[nMics], :], Gadfly.Geom.point, Gadfly.Theme(default_color=parse(Colors.Colorant, "red"))),
+			Gadfly.Guide.xlabel("Sample Points"), Gadfly.Guide.ylabel("Normalized Signal Amplitude"), Gadfly.Guide.title("Sensor: $nMics With $RecCorr Correlation"), Gadfly.Guide.manual_color_key("Legend",
 			["Reconstruction", "Original Observatons"], ["red", "green", ])
 		)
-		BarPlot = plot(x=1:nSources, y = W[[nMics], :], Geom.bar, Guide.xlabel("Sources"), Guide.ylabel("Percentage of source in Sensor Observation"), Guide.title("Percentages of each source seen by the sensor"))
-		Both = hstack(ResultPlot, BarPlot)
-		draw(SVG("./ReconstructionPlots/Sensor$nMics.With$RecCorr.Correlation.svg", 40cm, 20cm), Both)
+		BarPlot = Gadfly.plot(x=1:nSources, y = W[[nMics], :], Gadfly.Geom.bar, Gadfly.Guide.xlabel("Sources"), Gadfly.Guide.ylabel("Percentage of source in Sensor Observation"), Gadfly.Guide.title("Percentages of each source seen by the sensor"))
+		Both = Gadfly.hstack(ResultPlot, BarPlot)
+		Gadfly.draw(Gadfly.SVG("./ReconstructionPlots/Sensor$nMics.With$RecCorr.Correlation.svg", 40Gadfly.cm, 20Gadfly.cm), Both)
 	end
 	return Rec
 end
