@@ -229,11 +229,7 @@ function execute(X::Matrix, noc::Int64, opts, varargin...)
 	Hf=fft(H, 2)
 	#Hf=Hf[:, 1:floor(size(Hf, 2)/2)+1];  # depricated syntax
 	Hf=Hf[:, 1:Int(floor(size(Hf, 2)/2))+1]
-	if VERSION < v"0.6"
-		f=f[1:size(Xf, 2)]'*(-1)
-	else
-		f=f[1:size(Xf, 2)]*(-1)
-	end
+	f=f[1:size(Xf, 2)]*(-1)
 	# Initial Cost
 	Rec=Array{Float64}(size(X))
 	for i=1:size(W, 1)

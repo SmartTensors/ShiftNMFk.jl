@@ -253,11 +253,7 @@ function CosCluster(X, maxSource)
 		N=size(H, 2);
 		f=im*2*pi*collect(0:N-1)'/N;
 		#f=f[1:size(Hf, 2)]'*(-1);
-		if VERSION < v"0.6"
-			f=f[1:size(Hf, 2)]'*(-1);
-		else
-			f=f[1:size(Hf, 2)]*(-1);
-		end
+		f=f[1:size(Hf, 2)]*(-1);
 		for i=1:size(W, 1)
 			Hft=Hf[usecomp, :].*exp.(T[i:i, usecomp]'*f);
 			if mod(size(X, 2), 2)==0
