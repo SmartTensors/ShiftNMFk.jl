@@ -1,4 +1,4 @@
-NMFk: Nonnegative Matrix Factorization using k-means clustering
+ShiftNMFk: Nonnegative Matrix Factorization using k-means clustering and accounting for signal temporal shifts
 ================
 
 <div style="text-align: left">
@@ -36,14 +36,14 @@ GPU and TPU accelerations are also available through existing Julia packages.
 After starting Julia, execute:
 
 ```julia
-import Pkg; Pkg.add("NMFk")
+import Pkg; Pkg.add("ShiftNMFk")
 ```
 
 to access the latest released version.
 To utilize the latest updates (commits) use:
 
 ```julia
-import Pkg; Pkg.add(Pkg.PackageSpec(name="NMFk", rev="master"))
+import Pkg; Pkg.add(Pkg.PackageSpec(name="ShiftNMFk", rev="master"))
 ```
 
 Docker
@@ -54,80 +54,6 @@ docker run --interactive --tty montyvesselinov/tensors
 ```
 
 The docker image provides access to all **TensorDecomposition** packages.
-
-### Testing
-
-```julia
-Pkg.test("NMFk")
-```
-
-### Examples
-
-A simple problem demonstrating **NMFk** can be executed as follows.
-First, generate 3 random signals in a matrix `W`:
-
-```julia
-a = rand(15)
-b = rand(15)
-c = rand(15)
-W = [a b c]
-```
-
-Then, mix the signals to produce a data matrix `X` of 5 sensors observing the mixed signals as follows:
-
-```julia
-X = [a+c*3 a*10+b b b*5+c a+b*2+c*5]
-```
-
-This is equivalent to generating a mixing matrix `H` and obtain `X` by multiplying `W` and `H`
-
-```julia
-H = [1 10 0 0 1; 0 1 1 5 2; 3 0 0 1 5]
-X = W * H
-```
-
-After that execute, **NMFk** to estimate the number of unknown mixed signals based only on the information in `X`.
-
-```julia
-import NMFk
-We, He, fitquality, robustness, aic, kopt = NMFk.execute(X, 2:5; save=false, method=:simple);
-```
-
-The execution will produce something like this:
-
-```
-[ Info: Results
-Signals:  2 Fit:       15.489 Silhouette:    0.9980145 AIC:    -38.30184
-Signals:  3 Fit: 3.452203e-07 Silhouette:    0.8540085 AIC:    -1319.743
-Signals:  4 Fit: 8.503988e-07 Silhouette:   -0.5775127 AIC:    -1212.129
-Signals:  5 Fit: 2.598571e-05 Silhouette:   -0.6757581 AIC:    -915.6589
-[ Info: Optimal solution: 3 signals
-```
-
-The code returns the estimated optimal number of signals `kopt` which in this case as expected is equal to 3.
-
-The code also returns estimates of matrices `W` and `H`.
-It can be easily verified that `We[kopt]` and `He[kopt]` are scaled versions of the original `W` and `H` matrices.
-
-Note that the order of columns ('signals') in `W` and  `We[kopt]` are not expected to match.
-Also note that the order of rows ('sensors') in `H` and  `He[kopt]` are also not expected to match.
-The estimated orders will be different every time the code is executed.
-
-For example, the matrices can be visualized using:
-
-```julia
-import Pkg; Pkg.add("Mads")
-import Mads
-Mads.plotseries([a b c])
-Mads.plotseries(We[kopt] ./ maximum(We[kopt]))
-```
-
-```julia
-NMFk.plotmatrix(H)
-NMFk.plotmatrix(He[kopt] ./ maximum(He[kopt]))
-```
-
-More examples can be found the in the `test`, `demo`, and `examples` directories of **NMFk**.
 
 ### Applications:
 
